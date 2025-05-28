@@ -1,0 +1,3 @@
+# db.query(Question).get(1) => LegacyAPIWarning
+# 최신 api 에서는.
+db.get(Question, 1)
