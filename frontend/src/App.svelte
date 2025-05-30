@@ -1,22 +1,11 @@
 <script>
-  let question_list = [];
+  import Router from 'svelte-spa-router';
+  import Home from './routes/Home.svelte';
 
-  function get_question_list() {
-    fetch('http://localhost:8000/api/question/list')
-      .then(response => response.json())
-      .then(data => {
-        question_list = data;
-      })
-      .catch(error => {
-        console.error('Error fetching questions:', error);
-      });
-  }
-
-  get_question_list();
+  const routes = {
+    '/': Home,
+    // Add other routes here as needed
+  };
 </script>
 
-<ul>
-  {#each question_list as question}
-    <li>{question.subject}</li>
-  {/each}
-</ul>
+<Router {routes} />
