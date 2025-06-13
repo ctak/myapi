@@ -1,10 +1,11 @@
 <script>
   import Router from 'svelte-spa-router';
   import Home from './routes/Home.svelte';
+  import Detail from './routes/Detail.svelte';
 
   const routes = {
     '/': Home,
-    // Add other routes here as needed
+    '/detail/:question_id': Detail,
   };
 </script>
 
