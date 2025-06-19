@@ -8,6 +8,7 @@ const fastapi = (
   let method = operation.toLowerCase();
   let content_type = "application/json";
   let body = JSON.stringify(params); // fastapi() 를 콜할 때는 javascript 객체임.
+  // let body = params;
 
   let _url = import.meta.env.VITE_SERVER_URL + url;
   if (method === "get") {
@@ -17,13 +18,21 @@ const fastapi = (
 
   let options = {
     method,
-    Headers: {
+    headers: {
+      // Headers 로 써서 계속해서 [422 Unprocessable Entity] 에러가 발생했음.
       "Content-Type": content_type,
     },
     body,
   };
 
   fetch(_url, options).then((response) => {
+    if (response.status === 204) {
+      // 204 No Content
+      if (success_callback) {
+        success_callback(); // 성공 콜백에 null 전달
+      }
+      return; // 204 응답은 본문이 없으므로 여기서 종료
+    }
     response
       .json()
       .then((json) => {
